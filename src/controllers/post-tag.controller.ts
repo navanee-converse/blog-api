@@ -19,8 +19,7 @@ export const getTagsByPost = async (req: Request, res: Response) => {
 };
 
 export const removeTagFromPost = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "PostTag ID is required");
+  const id = req.params.id!;
 
   const deleted = await removeTagFromPostService(id);
   if (!deleted) throw new HttpError(404, "PostTag not found");

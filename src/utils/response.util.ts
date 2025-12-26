@@ -1,4 +1,3 @@
-// src/utils/response.ts
 export function sendResponse<T>(
   res: any,
   data: T | null,

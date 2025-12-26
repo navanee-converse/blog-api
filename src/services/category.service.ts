@@ -12,7 +12,7 @@ export const createCategoryService = async (dto: CreateCategoryDTO) => {
 };
 
 export const getCategoryByIdService = async (id: string) => {
-  const category = await categoryRepo.findOne({ where: { id } });
+  const category = await categoryRepo.findOne({ where: { id: id } });
   if (!category) throw new HttpError(404, "Category not found");
   return category;
 };
@@ -27,8 +27,7 @@ export const updateCategoryService = async (
 ) => {
   const category = await getCategoryByIdService(id);
 
-  if (dto.name !== undefined) category.name = dto.name;
-  if (dto.description !== undefined) category.description = dto.description;
+  Object.assign(category, dto);
 
   return categoryRepo.save(category);
 };

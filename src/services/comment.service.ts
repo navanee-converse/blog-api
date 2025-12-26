@@ -32,22 +32,15 @@ export const getCommentByIdService = async (id: string) => {
   return comment;
 };
 
-export const getCommentsByPostId = async (postId?: string) => {
-  if (postId) {
-    const comment = await commentRepo.find({
-      where: { post: { id: postId } },
-      relations: ["post", "user"],
-      order: { createdAt: "DESC" },
-    });
+export const getCommentsByPostId = async (postId: string) => {
+  const comment = await commentRepo.find({
+    where: { post: { id: postId } },
+    relations: ["post", "user"],
+    order: { createdAt: "DESC" },
+  });
 
-    if (comment.length === 0) throw new HttpError(400, "Invalid Post ID");
-    return comment;
-  } else {
-    return commentRepo.find({
-      relations: ["post", "user"],
-      order: { createdAt: "DESC" },
-    });
-  }
+  if (comment.length === 0) throw new HttpError(400, "Invalid Post ID");
+  return comment;
 };
 
 export const updateCommentService = async (

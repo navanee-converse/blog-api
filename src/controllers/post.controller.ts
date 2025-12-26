@@ -15,12 +15,9 @@ export const createPost = async (req: Request, res: Response) => {
 };
 
 export const getPostById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Post ID is required");
+  const id = req.params.id!;
 
   const post = await getPostByIdService(id);
-  if (!post) throw new HttpError(404, "Post not found");
-
   sendResponse(res, post, "Post fetched successfully");
 };
 
@@ -32,18 +29,14 @@ export const getAllPosts = async (req: Request, res: Response) => {
 };
 
 export const updatePost = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Post ID is required");
+  const id = req.params.id!;
 
   const post = await updatePostService(req.body, id, req.user);
-  if (!post) throw new HttpError(404, "Post not found");
-
   sendResponse(res, post, "Post updated successfully");
 };
 
 export const deletePost = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Post ID is required");
+  const id = req.params.id!;
 
   const deleted = await deletePostService(id);
   if (!deleted) throw new HttpError(404, "Post not found");

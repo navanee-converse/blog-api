@@ -5,8 +5,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "yourjwtsecret";
 const JWT_EXPIRES_IN = "1d"; // token expiry
 
 export const generateToken = (payload: TokenInterface) => {
-  console.log(payload);
-
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 };
 

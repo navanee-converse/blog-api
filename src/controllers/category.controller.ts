@@ -15,12 +15,9 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 
 export const getCategoryById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Category ID is required");
+  const id = req.params.id!;
 
   const category = await getCategoryByIdService(id);
-  if (!category) throw new HttpError(404, "Category not found");
-
   sendResponse(res, category, "Category fetched successfully");
 };
 
@@ -30,18 +27,14 @@ export const getAllCategories = async (_req: Request, res: Response) => {
 };
 
 export const updateCategory = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Category ID is required");
+  const id = req.params.id!;
 
   const category = await updateCategoryService(id, req.body);
-  if (!category) throw new HttpError(404, "Category not found");
-
   sendResponse(res, category, "Category updated successfully");
 };
 
 export const deleteCategory = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Category ID is required");
+  const id = req.params.id!;
 
   const deleted = await deleteCategoryService(id);
   if (!deleted) throw new HttpError(404, "Category not found");

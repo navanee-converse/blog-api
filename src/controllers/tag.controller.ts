@@ -15,12 +15,9 @@ export const createTag = async (req: Request, res: Response) => {
 };
 
 export const getTagById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Tag ID is required");
+  const id = req.params.id!;
 
   const tag = await getTagByIdService(id);
-  if (!tag) throw new HttpError(404, "Tag not found");
-
   sendResponse(res, tag, "Tag fetched successfully");
 };
 
@@ -30,18 +27,14 @@ export const getAllTags = async (_req: Request, res: Response) => {
 };
 
 export const updateTag = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Tag ID is required");
+  const id = req.params.id!;
 
   const tag = await updateTagService(id, req.body);
-  if (!tag) throw new HttpError(404, "Tag not found");
-
   sendResponse(res, tag, "Tag updated successfully");
 };
 
 export const deleteTag = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Tag ID is required");
+  const id = req.params.id!;
 
   const deleted = await deleteTagService(id);
   if (!deleted) throw new HttpError(404, "Tag not found");

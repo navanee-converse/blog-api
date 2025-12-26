@@ -1,7 +1,6 @@
 export interface CreateCommentDTO {
   commentText: string;
-  postId: string; // UUID of post
-  userId: string; // UUID of user
+  postId: string;
 }
 
 export interface UpdateCommentDTO {

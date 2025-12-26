@@ -51,10 +51,10 @@ export const loginUser = async (email: string, password: string) => {
     where: { email },
     select: ["password", "name", "role", "id", "email"],
   });
-  if (!user) return null;
+  if (!user) throw new HttpError(400, "Invalid mail address");
 
   const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) return null;
+  if (!validPassword) throw new HttpError(400, "Invalid Password");
 
   const token = generateToken({
     id: user.id,

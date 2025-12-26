@@ -39,12 +39,11 @@ export const createPostService = async (
     title: dto.title,
     content: dto.content,
     isPublished: dto.isPublished ?? false,
-    author: { id: user.id },
     category: { id: dto.categoryId },
+    author: { id: user.id },
   });
   const savedPost = await postRepo.save(post);
 
-  // Handle tags
   if (dto.tagIds && dto.tagIds.length > 0) {
     const postTags = dto.tagIds.map((tagId) =>
       postTagRepo.create({ post: savedPost, tag: { id: tagId } })
@@ -52,15 +51,14 @@ export const createPostService = async (
     await postTagRepo.save(postTags);
   }
 
-  return getPostByIdService(savedPost.id); // return full post with relations
+  return getPostByIdService(savedPost.id);
 };
 
 export const getAllPostsService = async (page = 1, limit = 10) => {
   const [posts, total] = await postRepo.findAndCount({
-    relations: ["author", "category", "comments", "comments.user"],
+    relations: ["author", "category", "comments"],
     take: limit,
     skip: (page - 1) * limit,
-    order: { createdAt: "DESC" },
   });
   return { posts, total, page, limit };
 };

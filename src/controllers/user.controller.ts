@@ -16,13 +16,11 @@ export const userCreate = async (req: Request, res: Response) => {
 
 export const getCurrentUser = async (req: Request, res: Response) => {
   const user = await getUser(req.user);
-  if (!user) throw new HttpError(404, "User not found");
   sendResponse(res, user, "User fetched successfully");
 };
 
 export const userUpdate = async (req: Request, res: Response) => {
   const user = await updateUser(req.body, req.user);
-  if (!user) throw new HttpError(404, "User not found");
   sendResponse(res, user, "User updated successfully");
 };
 
@@ -34,9 +32,7 @@ export const userDelete = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log(email, password);
-  
+
   const result = await loginUser(email, password);
-  if (!result) throw new HttpError(401, "Invalid credentials");
-  sendResponse(res, result, "Login successful");
+  sendResponse(res, result, "Login successfull");
 };

@@ -15,35 +15,28 @@ export const createComment = async (req: Request, res: Response) => {
 };
 
 export const getCommentById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Comment ID is required");
-
+  const id = req.params.id!;
   const comment = await getCommentByIdService(id);
-  if (!comment) throw new HttpError(404, "Comment not found");
 
   sendResponse(res, comment, "Comment fetched successfully");
 };
 
 export const getComments = async (req: Request, res: Response) => {
   const postId = req.query.postId as string | undefined;
+  if (!postId) throw new HttpError(400, "Post Id not found");
   const comments = await getCommentsByPostId(postId);
   sendResponse(res, comments, "Comments fetched successfully");
 };
 
 export const updateComment = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Comment ID is required");
+  const id = req.params.id!;
 
   const comment = await updateCommentService(id, req.body);
-  if (!comment) throw new HttpError(404, "Comment not found");
-
   sendResponse(res, comment, "Comment updated successfully");
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  if (!id) throw new HttpError(400, "Comment ID is required");
-
+  const id = req.params.id!;
   const deleted = await deleteCommentService(id);
   if (!deleted) throw new HttpError(404, "Comment not found");
 

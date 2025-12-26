@@ -8,7 +8,40 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "npm run build && node dist/server.js",
-    "dev": "tsx watch src/main.ts"
+    "dev": "tsx watch src/main.ts",
+    "test:e2e": "jest --testMatch \"**/*.e2e.spec.ts\" --runInBand --coverage --coverageDirectory=coverage/e2e",
+    "test:int": "jest --testMatch \"**/*.int.spec.ts\" --runInBand --coverage --coverageDirectory=coverage/integration",
+    "test:unit": "jest --testMatch \"**/*.spec.ts\" \"!**/*.int.spec.ts\" \"!**/*.e2e.spec.ts\" --coverage --coverageDirectory=coverage/unit"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "clearMocks": true,
+    "resetMocks": true,
+    "restoreMocks": true,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/*.spec.ts",
+      "**/*.int.spec.ts",
+      "**/*.e2e.spec.ts"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "collectCoverageFrom": [
+      "src/services/**/*.ts",
+      "src/controllers/**/*.ts",
+      "!src/**/*.entity.ts",
+      "!src/**/*.dto.ts",
+      "!src/database/**"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -29,10 +62,15 @@
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.3",
+    "@types/supertest": "^6.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.21.0",

@@ -3,7 +3,6 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
-
 import userRoutes from "./routes/user.route";
 import postRoutes from "./routes/post.route";
 import commentRoutes from "./routes/comment.route";
@@ -30,20 +29,9 @@ app.use("/post-tags", postTagRoutes);
 app.use("/tags", tagRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// Root endpoint
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello TypeScript + Express!");
-});
-
-// 404 handler
-app.use((req: Request, res: Response) => {
-  throw new HttpError(404, "Not Found");
-});
 
 // Global error handler
 app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
-  
   if (err instanceof HttpError) {
     return res.status(err.statusCode).json({
       success: false,
