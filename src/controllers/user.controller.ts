@@ -26,7 +26,10 @@ export const userUpdate = async (req: Request, res: Response) => {
 
 export const userDelete = async (req: Request, res: Response) => {
   const deleted = await deleteUser(req.user);
+
   if (!deleted) throw new HttpError(404, "User not found");
+  console.log('deleted-------');
+  
   sendResponse(res, null, "User deleted successfully");
 };
 

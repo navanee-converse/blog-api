@@ -42,7 +42,11 @@ export const updateUser = async (dto: UpdateUserDTO, user: TokenInterface) => {
 
 export const deleteUser = async (user: TokenInterface) => {
   const { id } = user;
+  console.log(id);
+
   const result = await userRepo.delete(id);
+  console.log(result.affected);
+
   return result.affected! > 0;
 };
 
